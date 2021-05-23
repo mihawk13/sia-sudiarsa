@@ -16,8 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         User::create([
-            'username' => 'admin',
-            'password' => bcrypt('admin'),
+            'nama' => 'Pemilik',
+            'username' => 'pemilik',
+            'password' => bcrypt('pemilik'),
+            'level' => 'Pemilik',
+        ]);
+        User::create([
+            'nama' => 'Karyawan',
+            'username' => 'karyawan',
+            'password' => bcrypt('karyawan'),
+            'level' => 'Karyawan',
         ]);
     }
 }
