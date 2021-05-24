@@ -87,7 +87,13 @@ class PembelianController extends Controller
             'grand_total' => $req->total,
             'status' => 'Simpan',
         ]);
-        return redirect()->route('pembelian')->with('berhasil', 'Data berhasil disimpan!');
+
+        $back = "pembelian";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.pembelian";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil disimpan!');
     }
 
     /**
@@ -100,7 +106,13 @@ class PembelianController extends Controller
     {
         TransaksiPembelianDetail::where('pembelian_id', $req->idpnj)->delete();
         TransaksiPembelian::where('id', $req->idpnj)->delete();
-        return redirect()->route('pembelian')->with('berhasil', 'Data berhasil dihapus!');
+
+        $back = "pembelian";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.pembelian";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil dihapus!');
     }
 
     /**
@@ -121,6 +133,12 @@ class PembelianController extends Controller
     {
         TransaksiPembelianDetail::where('pembelian_id', $id)->delete();
         TransaksiPembelian::where('id', $id)->delete();
-        return redirect()->route('pembelian')->with('berhasil', 'Transaksi dibatalkan!');
+
+        $back = "pembelian";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.pembelian";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Transaksi dibatalkan!');
     }
 }

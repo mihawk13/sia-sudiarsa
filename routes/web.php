@@ -74,6 +74,35 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
 });
 
 Route::middleware(['karyawan', 'auth'])->prefix('karyawan')->group(function () {
-    // Route::get('tabungan', [ControllersSiswaController::class, 'tabungan'])->name('siswa.tabungan');
-    // Route::get('penarikan', [ControllersSiswaController::class, 'penarikan'])->name('siswa.penarikan');
+    Route::get('kontak', [KontakController::class, 'index'])->name('karyawan.kontak');
+    Route::post('kontak', [KontakController::class, 'store']);
+    Route::put('kontak', [KontakController::class, 'update']);
+
+    Route::get('barang', [BarangController::class, 'index'])->name('karyawan.barang');
+    Route::post('barang', [BarangController::class, 'store']);
+    Route::put('barang', [BarangController::class, 'update']);
+
+    Route::get('kas', [KasController::class, 'index'])->name('karyawan.kas');
+    Route::post('kas', [KasController::class, 'store']);
+    Route::put('kas', [KasController::class, 'update']);
+
+    Route::get('biaya', [BiayaController::class, 'index'])->name('karyawan.biaya');
+    Route::post('biaya', [BiayaController::class, 'store']);
+    Route::put('biaya', [BiayaController::class, 'update']);
+
+    Route::get('penjualan', [PenjualanController::class, 'index'])->name('karyawan.penjualan');
+    Route::post('penjualan', [PenjualanController::class, 'hapus']);
+    Route::get('penjualan/tambah', [PenjualanController::class, 'create'])->name('karyawan.penjualan.tambah');
+    Route::post('penjualan/tambah', [PenjualanController::class, 'store']);
+    Route::put('penjualan/tambah', [PenjualanController::class, 'simpan']);
+    Route::delete('penjualan/tambah/{id}', [PenjualanController::class, 'destroy'])->name('karyawan.penjualan.hapus');
+    Route::get('penjualan/tambah/{id}', [PenjualanController::class, 'batal'])->name('karyawan.penjualan.batal');
+
+    Route::get('pembelian', [PembelianController::class, 'index'])->name('karyawan.pembelian');
+    Route::post('pembelian', [PembelianController::class, 'hapus']);
+    Route::get('pembelian/tambah', [PembelianController::class, 'create'])->name('karyawan.pembelian.tambah');
+    Route::post('pembelian/tambah', [PembelianController::class, 'store']);
+    Route::put('pembelian/tambah', [PembelianController::class, 'simpan']);
+    Route::delete('pembelian/tambah/{id}', [PembelianController::class, 'destroy'])->name('karyawan.pembelian.hapus');
+    Route::get('pembelian/tambah/{id}', [PembelianController::class, 'batal'])->name('karyawan.pembelian.batal');
 });

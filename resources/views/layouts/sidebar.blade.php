@@ -20,6 +20,7 @@
                 <li class="nav-devider"></li>
                 <li> <a class="waves-effect waves-dark" href="{{ route('dashboard') }}" aria-expanded="false"><i
                             class="mdi mdi-gauge"></i>Dashboard</a></li>
+                @if (auth()->user()->level == 'Pemilik')
                 <li> <a class="waves-effect waves-dark" href="{{ route('kontak') }}" aria-expanded="false"><i
                             class="mdi mdi-account-box"></i>Kontak</a></li>
                 <li> <a class="waves-effect waves-dark" href="{{ route('akun') }}" aria-expanded="false"><i
@@ -27,7 +28,8 @@
                 <li> <a class="waves-effect waves-dark" href="{{ route('barang') }}" aria-expanded="false"><i
                             class="mdi mdi-gift"></i>Barang</a></li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                            class="mdi mdi-plus-circle-multiple-outline"></i><span class="hide-menu">Transaksi </span></a>
+                            class="mdi mdi-plus-circle-multiple-outline"></i><span class="hide-menu">Transaksi
+                        </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('kas') }}">Kas</a></li>
                         <li><a href="{{ route('penjualan') }}">Penjualan</a></li>
@@ -44,6 +46,23 @@
                         <li><a href="/">Persediaan Barang Dagang</a></li>
                     </ul>
                 </li>
+                @else
+                <li> <a class="waves-effect waves-dark" href="{{ route('karyawan.kontak') }}" aria-expanded="false"><i
+                            class="mdi mdi-account-box"></i>Kontak</a></li>
+                <li> <a class="waves-effect waves-dark" href="{{ route('karyawan.barang') }}" aria-expanded="false"><i
+                            class="mdi mdi-gift"></i>Barang</a></li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                            class="mdi mdi-plus-circle-multiple-outline"></i><span class="hide-menu">Transaksi
+                        </span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('karyawan.kas') }}">Kas</a></li>
+                        <li><a href="{{ route('karyawan.penjualan') }}">Penjualan</a></li>
+                        <li><a href="{{ route('karyawan.pembelian') }}">Pembelian</a></li>
+                        <li><a href="{{ route('karyawan.biaya') }}">Biaya</a></li>
+                    </ul>
+                </li>
+                @endif
+
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

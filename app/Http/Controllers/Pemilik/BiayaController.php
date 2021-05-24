@@ -44,7 +44,13 @@ class BiayaController extends Controller
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('biaya')->with('berhasil', 'Data berhasil ditambah!');
+
+        $back = "biaya";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.biaya";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -83,7 +89,13 @@ class BiayaController extends Controller
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('biaya')->with('berhasil', 'Data berhasil diubah!');
+
+        $back = "biaya";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.biaya";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');
     }
 
     /**

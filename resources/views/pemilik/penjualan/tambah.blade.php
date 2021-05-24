@@ -58,7 +58,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-icon-anim btn-square"><i
                                     class="fa fa-save"></i> Simpan</button>
-                            <a href="{{ route('penjualan.batal', $id) }}" type="button" class="btn btn-danger btn-icon-anim btn-square"><i
+                            <a href="@if(auth()->user()->level == 'Karyawan') {{ route('karyawan.penjualan.batal', $id)  }} @else {{ route('penjualan.batal', $id)  }} @endif" type="button" class="btn btn-danger btn-icon-anim btn-square"><i
                                     class="fa fa-times"></i> Batal</a>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                         <tbody>
                             @foreach ($transaksi as $trx)
                             <tr>
-                                <form method="post" action="{{ route('penjualan.hapus', $trx->id) }}">
+                                <form method="post" action="@if(auth()->user()->level == 'Karyawan') {{ route('karyawan.penjualan.hapus', $trx->id)  }} @else {{ route('penjualan.hapus', $trx->id)  }} @endif">
                                     @csrf
                                     @method('Delete')
                                     <td>{{ $trx->barang->nama }}</td>
@@ -133,12 +133,3 @@
     </div>
 </div>
 @endsection
-
-{{-- @section('script')
-<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable();
-    });
-</script>
-@endsection --}}

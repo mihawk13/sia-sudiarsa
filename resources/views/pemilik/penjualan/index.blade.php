@@ -43,7 +43,7 @@ max-width: 30%;">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <a href="{{ route('penjualan.tambah') }}" class="btn btn-info waves-effect waves-light text-white" type="button"><span class="btn-label"><i class="fa fa-plus"></i></span>Tambah</a>
+                <a href="@if(auth()->user()->level == 'Karyawan') {{ route('karyawan.penjualan.tambah')  }} @else {{ route('penjualan.tambah')  }} @endif" class="btn btn-info waves-effect waves-light text-white" type="button"><span class="btn-label"><i class="fa fa-plus"></i></span>Tambah</a>
 
                 <div class="table-responsive m-t-40">
                     <table id="myTable" class="table table-bordered table-striped">

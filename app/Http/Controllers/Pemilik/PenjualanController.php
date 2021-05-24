@@ -80,14 +80,19 @@ class PenjualanController extends Controller
      */
     public function simpan(Request $req)
     {
-        // dd($req->all());
         TransaksiPenjualan::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'kontak_id' => $req->kontak,
             'grand_total' => $req->total,
             'status' => 'Simpan',
         ]);
-        return redirect()->route('penjualan')->with('berhasil', 'Data berhasil disimpan!');
+
+        $back = "penjualan";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.penjualan";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil disimpan!');
     }
 
     /**
@@ -100,7 +105,13 @@ class PenjualanController extends Controller
     {
         TransaksiPenjualanDetail::where('penjualan_id', $req->idpnj)->delete();
         TransaksiPenjualan::where('id', $req->idpnj)->delete();
-        return redirect()->route('penjualan')->with('berhasil', 'Data berhasil dihapus!');
+
+        $back = "penjualan";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.penjualan";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil dihapus!');
     }
 
     /**
@@ -122,6 +133,12 @@ class PenjualanController extends Controller
     {
         TransaksiPenjualanDetail::where('penjualan_id', $id)->delete();
         TransaksiPenjualan::where('id', $id)->delete();
-        return redirect()->route('penjualan')->with('berhasil', 'Transaksi dibatalkan!');
+
+        $back = "penjualan";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.penjualan";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Transaksi dibatalkan!');
     }
 }

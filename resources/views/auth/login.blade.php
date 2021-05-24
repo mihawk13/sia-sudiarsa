@@ -12,6 +12,7 @@ Author URL: http://w3layouts.com
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
 
     <!-- Google fonts -->
     <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
@@ -57,7 +58,7 @@ Author URL: http://w3layouts.com
         <!-- //container -->
         <!-- footer -->
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Service login form. All Rights Reserved | Design by <a
+            <p>&copy; {{ date('Y') }} Sistem Informasi Akuntansi. All Rights Reserved | Design by <a
                     href="https://w3layouts.com/" target="blank">W3layouts</a></p>
         </div>
         <!-- footer -->

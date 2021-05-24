@@ -44,7 +44,13 @@ class KasController extends Controller
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('kas')->with('berhasil', 'Data berhasil ditambah!');
+
+        $back = "kas";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.kas";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -83,7 +89,13 @@ class KasController extends Controller
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('kas')->with('berhasil', 'Data berhasil diubah!');
+
+        $back = "kas";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.kas";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');
     }
 
     /**

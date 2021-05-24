@@ -44,7 +44,12 @@ class BarangController extends Controller
             'harga' => $req->harga,
         ]);
 
-        return redirect()->route('barang')->with('berhasil', 'Data berhasil ditambah!');
+        $back = "barang";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.barang";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -84,7 +89,12 @@ class BarangController extends Controller
             'harga' => $req->harga,
         ]);
 
-        return redirect()->route('barang')->with('berhasil', 'Data berhasil diubah!');
+        $back = "barang";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.barang";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');
     }
 
     /**

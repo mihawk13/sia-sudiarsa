@@ -43,7 +43,12 @@ class KontakController extends Controller
             'telp' => $req->telp,
         ]);
 
-        return redirect()->route('kontak')->with('berhasil', 'Data berhasil ditambah!');
+        $back = "kontak";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.kontak";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -83,7 +88,12 @@ class KontakController extends Controller
             'telp' => $req->telp,
         ]);
 
-        return redirect()->route('kontak')->with('berhasil', 'Data berhasil diubah!');
+        $back = "kontak";
+        if (auth()->user()->level == 'Karyawan') {
+            $back = "karyawan.kontak";
+        }
+
+        return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');
     }
 
     /**
