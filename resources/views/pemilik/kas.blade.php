@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@section('css')
+<style>
+    .custom-header {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(19, 231, 54, 0.61);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+</style>
+@endsection
+
 @section('breadcrumb')
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
@@ -16,6 +27,18 @@
 
 @section('content')
 <x-messages />
+<!-- Card -->
+<div class="card m-t-30" style="flex: 0 0 30%;
+max-width: 30%;">
+    <div class="custom-header font-weight-bold">
+        <center>Saldo Kas</center>
+    </div>
+    <div class="card-body">
+        <p class="font-weight-bold text-center">Rp. {{ number_format(getJmlKas()) }}</p>
+    </div>
+</div>
+<!-- Card -->
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -117,8 +140,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="nama" class="control-label">Nama Akun:</label>
-                                                    <input type="text" class="form-control" name="nama" readonly required
-                                                        placeholder="Masukkan Nama Akun" value="{{ $kas->nama_akun }}">
+                                                    <input type="text" class="form-control" name="nama" readonly
+                                                        required placeholder="Masukkan Nama Akun"
+                                                        value="{{ $kas->nama_akun }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ket" class="control-label">Keterangan:</label>

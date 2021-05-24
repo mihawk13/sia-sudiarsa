@@ -13,9 +13,4 @@ class Kontak extends Model
     public $timestamps = false;
 
     protected $fillable = ['nama', 'status', 'telp'];
-
-    // public function pegawai()
-    // {
-    //     return $this->hasOne(Pegawai::class, 'id', 'pegawai_id');
-    // }
 }
