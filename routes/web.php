@@ -4,6 +4,7 @@ use App\Http\Controllers\Pemilik\AkunController;
 use App\Http\Controllers\Pemilik\BarangController;
 use App\Http\Controllers\Pemilik\KasController;
 use App\Http\Controllers\Pemilik\KontakController;
+use App\Http\Controllers\Pemilik\PenjualanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,15 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
     Route::get('kas', [KasController::class, 'index'])->name('kas');
     Route::post('kas', [KasController::class, 'store']);
     Route::put('kas', [KasController::class, 'update']);
+
+    Route::get('penjualan', [PenjualanController::class, 'index'])->name('penjualan');
+    Route::post('penjualan', [PenjualanController::class, 'hapus']);
+    Route::get('penjualan/tambah', [PenjualanController::class, 'create'])->name('penjualan.tambah');
+    Route::post('penjualan/tambah', [PenjualanController::class, 'store']);
+    Route::put('penjualan/tambah', [PenjualanController::class, 'simpan']);
+    Route::delete('penjualan/tambah/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.hapus');
+    Route::get('penjualan/tambah/{id}', [PenjualanController::class, 'batal'])->name('penjualan.batal');
+
 });
 
 Route::middleware(['karyawan', 'auth'])->prefix('karyawan')->group(function () {

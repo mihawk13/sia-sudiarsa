@@ -35,11 +35,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="kode" class="control-label">Kode:</label>
-                                            <input type="text" class="form-control" name="kode" required
-                                                placeholder="Masukkan Kode Akun">
-                                        </div>
+                                        <label for="kode" class="control-label">Kode:</label>
+                                        <input type="text" class="form-control" name="kode" required
+                                            placeholder="Masukkan Kode Akun">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="nama" class="control-label">Nama:</label>
                                         <input type="text" class="form-control" name="nama" required
                                             placeholder="Masukkan Nama Akun">

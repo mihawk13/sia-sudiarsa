@@ -30,7 +30,7 @@
                             class="mdi mdi-plus-circle-multiple-outline"></i><span class="hide-menu">Transaksi </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('kas') }}">Kas</a></li>
-                        <li><a href="/">Penjualan</a></li>
+                        <li><a href="{{ route('penjualan') }}">Penjualan</a></li>
                         <li><a href="/">Pembelian</a></li>
                         <li><a href="/">Bayar</a></li>
                     </ul>
@@ -38,8 +38,10 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="mdi mdi-book-open-variant"></i><span class="hide-menu">Laporan </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="starter-kit.html">Starter Kit</a></li>
-                        <li><a href="pages-blank.html">Blank page</a></li>
+                        <li><a href="/">Neraca</a></li>
+                        <li><a href="/">Laba Rugi</a></li>
+                        <li><a href="/">Catatan Atas Laporan Keuangan</a></li>
+                        <li><a href="/">Persediaan Barang Dagang</a></li>
                     </ul>
                 </li>
             </ul>
