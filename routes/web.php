@@ -4,6 +4,7 @@ use App\Http\Controllers\Pemilik\AkunController;
 use App\Http\Controllers\Pemilik\BarangController;
 use App\Http\Controllers\Pemilik\KasController;
 use App\Http\Controllers\Pemilik\KontakController;
+use App\Http\Controllers\Pemilik\PembelianController;
 use App\Http\Controllers\Pemilik\PenjualanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,14 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
     Route::put('penjualan/tambah', [PenjualanController::class, 'simpan']);
     Route::delete('penjualan/tambah/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.hapus');
     Route::get('penjualan/tambah/{id}', [PenjualanController::class, 'batal'])->name('penjualan.batal');
+
+    Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian');
+    Route::post('pembelian', [PembelianController::class, 'hapus']);
+    Route::get('pembelian/tambah', [PembelianController::class, 'create'])->name('pembelian.tambah');
+    Route::post('pembelian/tambah', [PembelianController::class, 'store']);
+    Route::put('pembelian/tambah', [PembelianController::class, 'simpan']);
+    Route::delete('pembelian/tambah/{id}', [PembelianController::class, 'destroy'])->name('pembelian.hapus');
+    Route::get('pembelian/tambah/{id}', [PembelianController::class, 'batal'])->name('pembelian.batal');
 
 });
 

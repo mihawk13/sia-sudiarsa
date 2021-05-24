@@ -4,26 +4,26 @@ namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kontak;
-use App\Models\TransaksiPenjualan;
-use App\Models\TransaksiPenjualanDetail;
+use App\Models\TransaksiPembelian;
+use App\Models\TransaksiPembelianDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PenjualanController extends Controller
+class PembelianController extends Controller
 {
     public function getId()
     {
-        $data = DB::select('SELECT MAX(id) maxId FROM transaksi_penjualan WHERE STATUS <> "On"');
+        $data = DB::select('SELECT MAX(id) maxId FROM transaksi_pembelian WHERE STATUS <> "On"');
         $id = $data[0]->maxId;
         $noUrut = (int) substr($id, 3, 4);
         $noUrut++;
-        return "PNJ" . sprintf("%04s", $noUrut);
+        return "PMB" . sprintf("%04s", $noUrut);
     }
 
     public function index()
     {
-        $penjualan = TransaksiPenjualan::all();
-        return view('pemilik.penjualan.index', compact('penjualan'));
+        $pembelian = TransaksiPembelian::all();
+        return view('pemilik.pembelian.index', compact('pembelian'));
     }
 
     /**
@@ -35,10 +35,10 @@ class PenjualanController extends Controller
     {
 
         $id = $this->getId();
-        $kontak = Kontak::where('status', 'Customer')->get();
-        $transaksi = TransaksiPenjualanDetail::where('penjualan_id', $this->getId())->get();
+        $kontak = Kontak::where('status', 'Supplier')->get();
+        $transaksi = TransaksiPembelianDetail::where('pembelian_id', $this->getId())->get();
 
-        return view('pemilik.penjualan.tambah', compact('kontak', 'id', 'transaksi'));
+        return view('pemilik.pembelian.tambah', compact('kontak', 'id', 'transaksi'));
     }
 
     /**
@@ -49,20 +49,20 @@ class PenjualanController extends Controller
      */
     public function store(Request $req)
     {
-        $trx = TransaksiPenjualan::find($req->id_penjualan);
+        $trx = TransaksiPembelian::find($req->id_pembelian);
 
         if ($trx == null) {
-            TransaksiPenjualan::create([
-                'id' => $req->id_penjualan,
+            TransaksiPembelian::create([
+                'id' => $req->id_pembelian,
                 'grand_total' => $req->total,
                 'status' => 'On',
             ]);
         } else {
-            TransaksiPenjualan::find($req->id_penjualan)->increment('grand_total', $req->total);
+            TransaksiPembelian::find($req->id_pembelian)->increment('grand_total', $req->total);
         }
 
-        TransaksiPenjualanDetail::create([
-            'penjualan_id' => $req->id_penjualan,
+        TransaksiPembelianDetail::create([
+            'pembelian_id' => $req->id_pembelian,
             'barang_id' => $req->barang,
             'satuan' => $req->satuan,
             'jumlah' => $req->jumlah,
@@ -81,13 +81,13 @@ class PenjualanController extends Controller
     public function simpan(Request $req)
     {
         // dd($req->all());
-        TransaksiPenjualan::where('id', $req->id)->update([
+        TransaksiPembelian::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'kontak_id' => $req->kontak,
             'grand_total' => $req->total,
             'status' => 'Simpan',
         ]);
-        return redirect()->route('penjualan')->with('berhasil', 'Data berhasil disimpan!');
+        return redirect()->route('pembelian')->with('berhasil', 'Data berhasil disimpan!');
     }
 
     /**
@@ -98,9 +98,9 @@ class PenjualanController extends Controller
      */
     public function hapus(Request $req)
     {
-        TransaksiPenjualanDetail::where('penjualan_id', $req->idpnj)->delete();
-        TransaksiPenjualan::where('id', $req->idpnj)->delete();
-        return redirect()->route('penjualan')->with('berhasil', 'Data berhasil dihapus!');
+        TransaksiPembelianDetail::where('pembelian_id', $req->idpnj)->delete();
+        TransaksiPembelian::where('id', $req->idpnj)->delete();
+        return redirect()->route('pembelian')->with('berhasil', 'Data berhasil dihapus!');
     }
 
     /**
@@ -111,17 +111,16 @@ class PenjualanController extends Controller
      */
     public function destroy($id)
     {
-        $pnj = TransaksiPenjualanDetail::find($id);
-        TransaksiPenjualan::find($pnj->penjualan_id)->decrement('grand_total', $pnj->total);
-
-        TransaksiPenjualanDetail::where('id', $id)->delete();
+        $pmb = TransaksiPembelianDetail::find($id);
+        TransaksiPembelian::find($pmb->pembelian_id)->decrement('grand_total', $pmb->total);
+        TransaksiPembelianDetail::where('id', $id)->delete();
         return redirect()->back();
     }
 
     public function batal($id)
     {
-        TransaksiPenjualanDetail::where('penjualan_id', $id)->delete();
-        TransaksiPenjualan::where('id', $id)->delete();
-        return redirect()->route('penjualan')->with('berhasil', 'Transaksi dibatalkan!');
+        TransaksiPembelianDetail::where('pembelian_id', $id)->delete();
+        TransaksiPembelian::where('id', $id)->delete();
+        return redirect()->route('pembelian')->with('berhasil', 'Transaksi dibatalkan!');
     }
 }

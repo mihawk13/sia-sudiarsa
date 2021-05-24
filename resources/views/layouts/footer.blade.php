@@ -1,3 +1,3 @@
 <footer class="footer">
-    © {{ date('Y') }} Admin Press Admin by themedesigner.in
+    © {{ date('Y')}} Sistem Informasi Akuntansi
 </footer>

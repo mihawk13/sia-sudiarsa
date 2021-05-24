@@ -31,7 +31,7 @@
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ route('kas') }}">Kas</a></li>
                         <li><a href="{{ route('penjualan') }}">Penjualan</a></li>
-                        <li><a href="/">Pembelian</a></li>
+                        <li><a href="{{ route('pembelian') }}">Pembelian</a></li>
                         <li><a href="/">Bayar</a></li>
                     </ul>
                 </li>
