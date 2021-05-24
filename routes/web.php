@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Pemilik\AkunController;
 use App\Http\Controllers\Pemilik\BarangController;
+use App\Http\Controllers\Pemilik\BiayaController;
 use App\Http\Controllers\Pemilik\KasController;
 use App\Http\Controllers\Pemilik\KontakController;
 use App\Http\Controllers\Pemilik\PembelianController;
@@ -49,6 +50,10 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
     Route::get('kas', [KasController::class, 'index'])->name('kas');
     Route::post('kas', [KasController::class, 'store']);
     Route::put('kas', [KasController::class, 'update']);
+
+    Route::get('biaya', [BiayaController::class, 'index'])->name('biaya');
+    Route::post('biaya', [BiayaController::class, 'store']);
+    Route::put('biaya', [BiayaController::class, 'update']);
 
     Route::get('penjualan', [PenjualanController::class, 'index'])->name('penjualan');
     Route::post('penjualan', [PenjualanController::class, 'hapus']);

@@ -1,5 +1,6 @@
 <?
 
+use App\Models\TransaksiBiaya;
 use App\Models\TransaksiKas;
 use App\Models\TransaksiPembelian;
 use App\Models\TransaksiPenjualan;
@@ -8,6 +9,12 @@ function getJmlKas()
 {
     $kas = TransaksiKas::sum('jumlah');
     return $kas;
+}
+
+function getJmlBiaya()
+{
+    $byy = TransaksiBiaya::sum('jumlah');
+    return $byy;
 }
 
 function getTotalPenjualan()

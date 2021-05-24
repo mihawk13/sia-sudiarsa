@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
-use App\Models\TransaksiKas;
+use App\Models\TransaksiBiaya;
 use Illuminate\Http\Request;
 
-class KasController extends Controller
+class BiayaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class KasController extends Controller
      */
     public function index()
     {
-        $kas = TransaksiKas::all();
-        return view('pemilik.kas', compact('kas'));
+        $biaya = TransaksiBiaya::all();
+        return view('pemilik.biaya', compact('biaya'));
     }
 
     /**
@@ -37,14 +37,14 @@ class KasController extends Controller
      */
     public function store(Request $req)
     {
-        TransaksiKas::create([
+        TransaksiBiaya::create([
             'tanggal' => $req->tanggal,
             'kode_akun' => $req->kode,
             'nama_akun' => $req->nama,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('kas')->with('berhasil', 'Data berhasil ditambah!');
+        return redirect()->route('biaya')->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -78,12 +78,12 @@ class KasController extends Controller
      */
     public function update(Request $req)
     {
-        TransaksiKas::where('id', $req->id)->update([
+        TransaksiBiaya::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
-        return redirect()->route('kas')->with('berhasil', 'Data berhasil diubah!');
+        return redirect()->route('biaya')->with('berhasil', 'Data berhasil diubah!');
     }
 
     /**
