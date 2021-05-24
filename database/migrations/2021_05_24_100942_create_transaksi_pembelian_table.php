@@ -16,7 +16,7 @@ class CreateTransaksiPembelianTable extends Migration
         Schema::create('transaksi_pembelian', function (Blueprint $table) {
             $table->string('id', 10);
             $table->date('tanggal')->default('2020-02-02');
-            $table->foreignId('kontak_id')->default(0);
+            $table->foreignId('kontak_id')->default(1);
             $table->double('grand_total')->default(0);
             $table->enum('status', ['On', 'Simpan']);
         });
