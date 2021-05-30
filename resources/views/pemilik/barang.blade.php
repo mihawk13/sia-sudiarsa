@@ -47,27 +47,11 @@
                                     <div class="form-group">
                                         <label for="merk" class="control-label">Merk:</label>
                                         <select name="merk" class="form-control">
-                                            <option value="">--Pilih Merk--</option>
-                                            <option value="INK">INK</option>
-                                            <option value="KYT">KYT</option>
-                                            <option value="Bogo">Bogo</option>
-                                            <option value="Cargloss">Cargloss</option>
-                                            <option value="MDS">MDS</option>
-                                            <option value="Kbc">Kbc</option>
-                                            <option value="Shark">Shark</option>
-                                            <option value="Nolan">Nolan</option>
-                                            <option value="Arai">Arai</option>
-                                            <option value="Shoei">Shoei</option>
-                                            <option value="GM">GM</option>
-                                            <option value="RSV">RSV</option>
-                                            <option value="Bell">Bell</option>
-                                            <option value="JPX">JPX</option>
+                                            <option selected disabled>--Pilih Merk Helm--</option>
+                                            @foreach (getMerkHelm() as $itm)
+                                            <option value="{{ $itm }}">{{ $itm }}</option>
+                                            @endforeach
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="harga" class="control-label">Harga:</label>
-                                        <input type="number" class="form-control" name="harga" required
-                                            placeholder="Masukkan Harga Barang">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -89,7 +73,7 @@
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Merk</th>
-                                <th>Harga</th>
+                                <th>Stock</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -100,7 +84,7 @@
                                 <td>{{ $brg->kode }}</td>
                                 <td>{{ $brg->nama }}</td>
                                 <td>{{ $brg->merk }}</td>
-                                <td>{{ number_format($brg->harga) }}</td>
+                                <td>{{ number_format($brg->stock) }}</td>
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-warning btn-icon-anim btn-square btn-sm"
@@ -136,27 +120,10 @@
                                                 <div class="form-group">
                                                     <label for="merk" class="control-label">Merk:</label>
                                                     <select name="merk" class="form-control">
-                                                        <option value="{{ $brg->merk }}">{{ $brg->merk }}</option>
-                                                        <option value="INK">INK</option>
-                                                        <option value="KYT">KYT</option>
-                                                        <option value="Bogo">Bogo</option>
-                                                        <option value="Cargloss">Cargloss</option>
-                                                        <option value="MDS">MDS</option>
-                                                        <option value="Kbc">Kbc</option>
-                                                        <option value="Shark">Shark</option>
-                                                        <option value="Nolan">Nolan</option>
-                                                        <option value="Arai">Arai</option>
-                                                        <option value="Shoei">Shoei</option>
-                                                        <option value="GM">GM</option>
-                                                        <option value="RSV">RSV</option>
-                                                        <option value="Bell">Bell</option>
-                                                        <option value="JPX">JPX</option>
+                                                        @foreach (getMerkHelm() as $itm)
+                                                        <option @if($brg->merk == $itm) selected @endif value="{{ $itm }}">{{ $itm }}</option>
+                                                        @endforeach
                                                     </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="harga" class="control-label">Harga:</label>
-                                                    <input type="number" class="form-control" name="harga" required
-                                                        placeholder="Masukkan Harga Barang" value="{{ $brg->harga }}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

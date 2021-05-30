@@ -5,6 +5,11 @@ use App\Models\TransaksiKas;
 use App\Models\TransaksiPembelian;
 use App\Models\TransaksiPenjualan;
 
+function getMerkHelm()
+{
+    return ['Bogo', 'GM', 'INK', 'KYT', 'NHK'];
+}
+
 function getJmlKas()
 {
     $kas = TransaksiKas::sum('jumlah');
@@ -27,4 +32,9 @@ function getTotalPembelian()
 {
     $grd = TransaksiPembelian::sum('grand_total');
     return $grd;
+}
+
+function getSaldoAkun($id_akun)
+{
+    return 0;
 }

@@ -37,19 +37,29 @@ class BarangController extends Controller
      */
     public function store(Request $req)
     {
-        Barang::create([
-            'kode' => $req->kode,
-            'nama' => $req->nama,
-            'merk' => $req->merk,
-            'harga' => $req->harga,
-        ]);
 
         $back = "barang";
         if (auth()->user()->level == 'Karyawan') {
             $back = "karyawan.barang";
         }
 
-        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+        try {
+            $req->validate([
+                'kode' => 'required|unique:barang',
+                'nama' => 'required',
+                'merk' => 'required',
+            ]);
+
+            Barang::create([
+                'kode' => $req->kode,
+                'nama' => $req->nama,
+                'merk' => $req->merk,
+            ]);
+
+            return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+        } catch (\Throwable $th) {
+            return redirect()->route($back)->with('gagal', $th->getMessage());
+        }
     }
 
     /**

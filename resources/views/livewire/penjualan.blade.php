@@ -10,17 +10,11 @@
                 @endforeach
             </select>
         </td>
-        <td width="15%">
-            <select name="satuan" class="form-control">
-                <option value="Grosir">Grosir</option>
-                <option value="Eceran">Eceran</option>
-            </select>
-        </td>
         <td width="10%">
             <input type="number" class="form-control" name="jumlah" wire:model="jumlah">
         </td>
         <td width="15%">
-            <input type="number" class="form-control" name="harga" readonly wire:model="harga">
+            <input type="number" class="form-control" name="harga" wire:model="harga">
         </td>
         <td width="25%">
             <input type="number" class="form-control" name="total" readonly wire:model="total">
@@ -34,7 +28,7 @@
     </form>
 </tr>
 
-@push('scripts')
+{{-- @push('scripts')
 
 <script>
     $(document).ready(function () {
@@ -46,4 +40,4 @@
 
 </script>
 
-@endpush
+@endpush --}}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akun;
 use App\Models\Kontak;
 use App\Models\TransaksiPenjualan;
 use App\Models\TransaksiPenjualanDetail;
@@ -36,9 +37,10 @@ class PenjualanController extends Controller
 
         $id = $this->getId();
         $kontak = Kontak::where('status', 'Customer')->get();
+        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
         $transaksi = TransaksiPenjualanDetail::where('penjualan_id', $this->getId())->get();
 
-        return view('pemilik.penjualan.tambah', compact('kontak', 'id', 'transaksi'));
+        return view('pemilik.penjualan.tambah', compact('kontak', 'id', 'transaksi', 'akun'));
     }
 
     /**
@@ -64,7 +66,6 @@ class PenjualanController extends Controller
         TransaksiPenjualanDetail::create([
             'penjualan_id' => $req->id_penjualan,
             'barang_id' => $req->barang,
-            'satuan' => $req->satuan,
             'jumlah' => $req->jumlah,
             'harga' => $req->harga,
             'total' => $req->total,
@@ -83,6 +84,7 @@ class PenjualanController extends Controller
         TransaksiPenjualan::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'kontak_id' => $req->kontak,
+            'akun_id' => $req->akun,
             'grand_total' => $req->total,
             'status' => 'Simpan',
         ]);

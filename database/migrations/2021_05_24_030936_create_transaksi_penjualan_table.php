@@ -17,6 +17,7 @@ class CreateTransaksiPenjualanTable extends Migration
             $table->string('id', 10);
             $table->date('tanggal')->default('2020-02-02');
             $table->foreignId('kontak_id')->default(1);
+            $table->foreignId('akun_id')->default(1);
             $table->double('grand_total')->default(0);
             $table->enum('status', ['On', 'Simpan']);
         });

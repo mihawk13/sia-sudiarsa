@@ -13,7 +13,7 @@ class TransaksiPenjualan extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ['id', 'tanggal', 'kontak_id', 'grand_total', 'status'];
+    protected $fillable = ['id', 'tanggal', 'kontak_id', 'akun_id', 'grand_total', 'status'];
 
     public function detail()
     {
@@ -23,5 +23,10 @@ class TransaksiPenjualan extends Model
     public function kontak()
     {
         return $this->hasOne(Kontak::class, 'id', 'kontak_id');
+    }
+
+    public function akun()
+    {
+        return $this->hasOne(Akun::class, 'id', 'akun_id');
     }
 }

@@ -63,6 +63,7 @@
                                 <th>No</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Saldo</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -72,6 +73,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $akn->kode }}</td>
                                 <td>{{ $akn->nama }}</td>
+                                <td>{{ getSaldoAkun($akn->id) }}</td>
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-warning btn-icon-anim btn-square btn-sm"

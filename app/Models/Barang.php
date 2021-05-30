@@ -12,5 +12,5 @@ class Barang extends Model
     protected $table = 'barang';
     public $timestamps = false;
 
-    protected $fillable = ['nama', 'kode', 'merk', 'harga'];
+    protected $fillable = ['nama', 'kode', 'merk', 'stock'];
 }

@@ -12,7 +12,7 @@ class TransaksiPenjualanDetail extends Model
     protected $table = 'transaksi_penjualan_detail';
     public $timestamps = false;
 
-    protected $fillable = ['penjualan_id', 'barang_id', 'satuan', 'jumlah', 'harga', 'total'];
+    protected $fillable = ['penjualan_id', 'barang_id', 'jumlah', 'harga', 'total'];
 
     public function barang()
     {

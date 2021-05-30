@@ -17,7 +17,6 @@ class CreateTransaksiPenjualanDetailTable extends Migration
             $table->id();
             $table->string('penjualan_id', 10);
             $table->foreignId('barang_id');
-            $table->string('satuan');
             $table->integer('jumlah')->nullable();
             $table->string('harga');
             $table->string('total');

@@ -37,12 +37,21 @@ class AkunController extends Controller
      */
     public function store(Request $req)
     {
-        Akun::create([
-            'kode' => $req->kode,
-            'nama' => $req->nama,
-        ]);
+        try {
+            $req->validate([
+                'kode' => 'required|unique:akun',
+                'nama' => 'required',
+            ]);
 
-        return redirect()->route('akun')->with('berhasil', 'Data berhasil ditambah!');
+            Akun::create([
+                'kode' => $req->kode,
+                'nama' => $req->nama,
+            ]);
+
+            return redirect()->route('akun')->with('berhasil', 'Data berhasil ditambah!');
+        } catch (\Throwable $th) {
+            return redirect()->route('akun')->with('gagal', $th->getMessage());
+        }
     }
 
     /**
