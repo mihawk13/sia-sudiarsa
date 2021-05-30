@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pemilik;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Barang;
+use App\Models\Kontak;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class KontakController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $barang = Barang::all();
-        return view('pemilik.barang', compact('barang'));
+        $kontak = Kontak::all();
+        return view('pemilik.kontak', compact('kontak'));
     }
 
     /**
@@ -37,29 +37,18 @@ class BarangController extends Controller
      */
     public function store(Request $req)
     {
+        Kontak::create([
+            'nama' => $req->nama,
+            'status' => $req->status,
+            'telp' => $req->telp,
+        ]);
 
-        $back = "barang";
+        $back = "kontak";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.barang";
+            $back = "karyawan.kontak";
         }
 
-        try {
-            $req->validate([
-                'kode' => 'required|unique:barang',
-                'nama' => 'required',
-                'merk' => 'required',
-            ]);
-
-            Barang::create([
-                'kode' => $req->kode,
-                'nama' => $req->nama,
-                'merk' => $req->merk,
-            ]);
-
-            return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
-        } catch (\Throwable $th) {
-            return redirect()->route($back)->with('gagal', $th->getMessage());
-        }
+        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
     }
 
     /**
@@ -93,14 +82,15 @@ class BarangController extends Controller
      */
     public function update(Request $req)
     {
-        Barang::where('id', $req->id)->update([
+        Kontak::where('id', $req->id)->update([
             'nama' => $req->nama,
-            'merk' => $req->merk,
+            'status' => $req->status,
+            'telp' => $req->telp,
         ]);
 
-        $back = "barang";
+        $back = "kontak";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.barang";
+            $back = "karyawan.kontak";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');

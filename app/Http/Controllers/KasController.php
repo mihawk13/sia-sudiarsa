@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Pemilik;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kontak;
+use App\Models\Akun;
+use App\Models\TransaksiKas;
 use Illuminate\Http\Request;
 
-class KontakController extends Controller
+class KasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class KontakController extends Controller
      */
     public function index()
     {
-        $kontak = Kontak::all();
-        return view('pemilik.kontak', compact('kontak'));
+        $kas = TransaksiKas::all();
+        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
+        return view('pemilik.kas', compact('kas', 'akun'));
     }
 
     /**
@@ -37,15 +39,16 @@ class KontakController extends Controller
      */
     public function store(Request $req)
     {
-        Kontak::create([
-            'nama' => $req->nama,
-            'status' => $req->status,
-            'telp' => $req->telp,
+        TransaksiKas::create([
+            'tanggal' => $req->tanggal,
+            'akun_id' => $req->akun_id,
+            'ket' => $req->ket,
+            'jumlah' => $req->jumlah,
         ]);
 
-        $back = "kontak";
+        $back = "kas";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.kontak";
+            $back = "karyawan.kas";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
@@ -82,15 +85,15 @@ class KontakController extends Controller
      */
     public function update(Request $req)
     {
-        Kontak::where('id', $req->id)->update([
-            'nama' => $req->nama,
-            'status' => $req->status,
-            'telp' => $req->telp,
+        TransaksiKas::where('id', $req->id)->update([
+            'tanggal' => $req->tanggal,
+            'ket' => $req->ket,
+            'jumlah' => $req->jumlah,
         ]);
 
-        $back = "kontak";
+        $back = "kas";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.kontak";
+            $back = "karyawan.kas";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');

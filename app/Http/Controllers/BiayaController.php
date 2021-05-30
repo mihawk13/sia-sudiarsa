@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Pemilik;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Akun;
-use App\Models\TransaksiKas;
+use App\Models\TransaksiBiaya;
 use Illuminate\Http\Request;
 
-class KasController extends Controller
+class BiayaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class KasController extends Controller
      */
     public function index()
     {
-        $kas = TransaksiKas::all();
-        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
-        return view('pemilik.kas', compact('kas', 'akun'));
+        $biaya = TransaksiBiaya::all();
+        $akun = Akun::all();
+        return view('pemilik.biaya', compact('biaya', 'akun'));
     }
 
     /**
@@ -39,16 +39,16 @@ class KasController extends Controller
      */
     public function store(Request $req)
     {
-        TransaksiKas::create([
+        TransaksiBiaya::create([
             'tanggal' => $req->tanggal,
             'akun_id' => $req->akun_id,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
 
-        $back = "kas";
+        $back = "biaya";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.kas";
+            $back = "karyawan.biaya";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
@@ -85,15 +85,15 @@ class KasController extends Controller
      */
     public function update(Request $req)
     {
-        TransaksiKas::where('id', $req->id)->update([
+        TransaksiBiaya::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
 
-        $back = "kas";
+        $back = "biaya";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.kas";
+            $back = "karyawan.biaya";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');

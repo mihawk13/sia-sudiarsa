@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pemilik;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Akun;
-use App\Models\TransaksiBiaya;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
-class BiayaController extends Controller
+class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,8 @@ class BiayaController extends Controller
      */
     public function index()
     {
-        $biaya = TransaksiBiaya::all();
-        $akun = Akun::all();
-        return view('pemilik.biaya', compact('biaya', 'akun'));
+        $barang = Barang::all();
+        return view('pemilik.barang', compact('barang'));
     }
 
     /**
@@ -39,19 +37,29 @@ class BiayaController extends Controller
      */
     public function store(Request $req)
     {
-        TransaksiBiaya::create([
-            'tanggal' => $req->tanggal,
-            'akun_id' => $req->akun_id,
-            'ket' => $req->ket,
-            'jumlah' => $req->jumlah,
-        ]);
 
-        $back = "biaya";
+        $back = "barang";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.biaya";
+            $back = "karyawan.barang";
         }
 
-        return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+        try {
+            $req->validate([
+                'kode' => 'required|unique:barang',
+                'nama' => 'required',
+                'merk' => 'required',
+            ]);
+
+            Barang::create([
+                'kode' => $req->kode,
+                'nama' => $req->nama,
+                'merk' => $req->merk,
+            ]);
+
+            return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+        } catch (\Throwable $th) {
+            return redirect()->route($back)->with('gagal', $th->getMessage());
+        }
     }
 
     /**
@@ -85,15 +93,14 @@ class BiayaController extends Controller
      */
     public function update(Request $req)
     {
-        TransaksiBiaya::where('id', $req->id)->update([
-            'tanggal' => $req->tanggal,
-            'ket' => $req->ket,
-            'jumlah' => $req->jumlah,
+        Barang::where('id', $req->id)->update([
+            'nama' => $req->nama,
+            'merk' => $req->merk,
         ]);
 
-        $back = "biaya";
+        $back = "barang";
         if (auth()->user()->level == 'Karyawan') {
-            $back = "karyawan.biaya";
+            $back = "karyawan.barang";
         }
 
         return redirect()->route($back)->with('berhasil', 'Data berhasil diubah!');

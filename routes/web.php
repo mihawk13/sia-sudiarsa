@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Pemilik\AkunController;
-use App\Http\Controllers\Pemilik\BarangController;
-use App\Http\Controllers\Pemilik\BiayaController;
-use App\Http\Controllers\Pemilik\KasController;
-use App\Http\Controllers\Pemilik\KontakController;
-use App\Http\Controllers\Pemilik\PembelianController;
-use App\Http\Controllers\Pemilik\PenjualanController;
+use App\Http\Controllers\AkunController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BiayaController;
+use App\Http\Controllers\KasController;
+use App\Http\Controllers\KontakController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
