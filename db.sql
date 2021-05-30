@@ -41,7 +41,9 @@ insert  into `akun`(`kode`,`nama`) values
 
 ('3-1001','Modal Pemilik'),
 
-('3-2001','Prive Pemilik'),
+('3-1002','ATM BCA'),
+
+('3-1003','ATM Mandiri'),
 
 ('4-1001','Penjualan'),
 

@@ -40,10 +40,10 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="mdi mdi-book-open-variant"></i><span class="hide-menu">Laporan </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="/">Neraca</a></li>
-                        <li><a href="/">Laba Rugi</a></li>
-                        <li><a href="/">Catatan Atas Laporan Keuangan</a></li>
-                        <li><a href="/">Persediaan Barang Dagang</a></li>
+                        <li><a href="{{ route('lap.neraca') }}">Neraca</a></li>
+                        <li><a href="{{ route('lap.labarugi') }}">Laba Rugi</a></li>
+                        <li><a href="{{ route('lap.calk') }}">Catatan Atas Laporan Keuangan</a></li>
+                        <li><a href="{{ route('lap.persediaan') }}">Persediaan Barang Dagang</a></li>
                     </ul>
                 </li>
                 @else

@@ -17,7 +17,7 @@ class KasController extends Controller
     public function index()
     {
         $kas = TransaksiKas::all();
-        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
+        $akun = Akun::where('kode', 'LIKE', '3%')->get();
         return view('pemilik.kas', compact('kas', 'akun'));
     }
 

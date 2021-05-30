@@ -63,9 +63,9 @@ max-width: 30%;">
                                             placeholder="Masukkan Tanggal">
                                     </div>
                                     <div class="form-group">
-                                        <label for="akun_id" class="control-label">Akun Sumber Biaya:</label>
+                                        <label for="akun_id" class="control-label">Akun:</label>
                                         <select id="akun_id" name="akun_id" class="form-control select2" required>
-                                            <option value="" disabled>--Pilih Akun Sumber Biaya--</option>
+                                            <option selected value="" disabled>--Pilih Akun--</option>
                                             @foreach ($akun as $akn)
                                                 <option value="{{ $akn->id }}">{{ $akn->kode . ' - ' . $akn->nama }}</option>
                                             @endforeach

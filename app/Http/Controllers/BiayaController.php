@@ -17,7 +17,7 @@ class BiayaController extends Controller
     public function index()
     {
         $biaya = TransaksiBiaya::all();
-        $akun = Akun::all();
+        $akun = Akun::where('kode', 'LIKE', '6%')->Orwhere('kode', 'LIKE', '1-2%')->get();
         return view('pemilik.biaya', compact('biaya', 'akun'));
     }
 

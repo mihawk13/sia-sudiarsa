@@ -5,6 +5,14 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BiayaController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\Laporan\CALKController;
+use App\Http\Controllers\Laporan\LabaRugiController;
+use App\Http\Controllers\Laporan\NeracaController;
+use App\Http\Controllers\Laporan\PDF_CALKController;
+use App\Http\Controllers\Laporan\PDF_LabaRugiController;
+use App\Http\Controllers\Laporan\PDF_NeracaController;
+use App\Http\Controllers\Laporan\PDF_PersediaanController;
+use App\Http\Controllers\Laporan\PersediaanBarangController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
@@ -71,6 +79,21 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
     Route::delete('pembelian/tambah/{id}', [PembelianController::class, 'destroy'])->name('pembelian.hapus');
     Route::get('pembelian/tambah/{id}', [PembelianController::class, 'batal'])->name('pembelian.batal');
 
+    Route::get('laporan/neraca', [NeracaController::class, 'index'])->name('lap.neraca');
+    Route::post('laporan/neraca', [NeracaController::class, 'filter']);
+    Route::get('laporan/neraca/{dari}/{hingga}', [PDF_NeracaController::class, 'cetak'])->name('lap.neraca.cetak');
+
+    Route::get('laporan/labarugi', [LabaRugiController::class, 'index'])->name('lap.labarugi');
+    Route::post('laporan/labarugi', [LabaRugiController::class, 'filter']);
+    Route::get('laporan/labarugi/{dari}/{hingga}', [PDF_LabaRugiController::class, 'cetak'])->name('lap.labarugi.cetak');
+
+    Route::get('laporan/calk', [CALKController::class, 'index'])->name('lap.calk');
+    Route::post('laporan/calk', [CALKController::class, 'filter']);
+    Route::get('laporan/calk/{dari}/{hingga}', [PDF_CALKController::class, 'cetak'])->name('lap.calk.cetak');
+
+    Route::get('laporan/persediaan', [PersediaanBarangController::class, 'index'])->name('lap.persediaan');
+    Route::post('laporan/persediaan', [PersediaanBarangController::class, 'filter']);
+    Route::get('laporan/persediaan/{dari}/{hingga}', [PDF_PersediaanController::class, 'cetak'])->name('lap.persediaan.cetak');
 });
 
 Route::middleware(['karyawan', 'auth'])->prefix('karyawan')->group(function () {
