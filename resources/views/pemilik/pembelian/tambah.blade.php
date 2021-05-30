@@ -47,7 +47,7 @@
                                 <select name="akun" class="form-control" required>
                                     <option selected value="">--Pilih Akun Kas--</option>
                                     @foreach ($akun as $akn)
-                                    <option value="{{ $akn->id }}">{{ $akn->nama }}</option>
+                                    <option value="{{ $akn->id }}">{{ $akn->kode . ' - ' . $akn->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>

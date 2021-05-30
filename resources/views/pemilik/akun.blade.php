@@ -73,7 +73,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $akn->kode }}</td>
                                 <td>{{ $akn->nama }}</td>
-                                <td>{{ getSaldoAkun($akn->id) }}</td>
+                                <td>{{ number_format(getSaldoAkun($akn->id)) }}</td>
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-warning btn-icon-anim btn-square btn-sm"

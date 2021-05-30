@@ -18,7 +18,6 @@ class CreateBarangTable extends Migration
             $table->string('kode');
             $table->string('nama');
             $table->string('merk');
-            $table->double('stock', 10)->nullable()->default(0);
         });
     }
 

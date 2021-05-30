@@ -62,7 +62,15 @@ max-width: 30%;">
                                         <input type="date" class="form-control" name="tanggal" required
                                             placeholder="Masukkan Tanggal">
                                     </div>
-                                    @livewire('kas')
+                                    <div class="form-group">
+                                        <label for="akun_id" class="control-label">Akun Kas:</label>
+                                        <select id="akun_id" name="akun_id" class="form-control" required>
+                                            <option value="" disabled>--Pilih Akun Kas--</option>
+                                            @foreach ($akun as $akn)
+                                                <option value="{{ $akn->id }}">{{ $akn->kode . ' - ' . $akn->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="ket" class="control-label">Keterangan:</label>
                                         <input type="text" class="form-control" name="ket" required
@@ -102,7 +110,7 @@ max-width: 30%;">
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $kas->tanggal }}</td>
-                                <td>{{ $kas->nama_akun }}</td>
+                                <td>{{ $kas->akun->nama }}</td>
                                 <td>{{ $kas->ket }}</td>
                                 <td>{{ number_format($kas->jumlah) }}</td>
                                 <td>
@@ -132,17 +140,11 @@ max-width: 30%;">
                                                     <input type="date" class="form-control" name="tanggal" required
                                                         placeholder="Masukkan Tanggal" value="{{ $kas->tanggal }}">
                                                 </div>
-                                                <div class="form-group" wire:ignore>
-                                                    <label for="kode" class="control-label">Kode Akun:</label>
-                                                    <select id="kode" name="kode" class="form-control" readonly>
-                                                        <option value="">{{ $kas->kode_akun }}</option>
-                                                    </select>
-                                                </div>
                                                 <div class="form-group">
                                                     <label for="nama" class="control-label">Nama Akun:</label>
                                                     <input type="text" class="form-control" name="nama" readonly
                                                         required placeholder="Masukkan Nama Akun"
-                                                        value="{{ $kas->nama_akun }}">
+                                                        value="{{ $kas->akun->nama }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ket" class="control-label">Keterangan:</label>

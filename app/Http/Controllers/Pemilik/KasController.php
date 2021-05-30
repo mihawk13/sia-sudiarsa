@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akun;
 use App\Models\TransaksiKas;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class KasController extends Controller
     public function index()
     {
         $kas = TransaksiKas::all();
-        return view('pemilik.kas', compact('kas'));
+        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
+        return view('pemilik.kas', compact('kas', 'akun'));
     }
 
     /**
@@ -39,8 +41,7 @@ class KasController extends Controller
     {
         TransaksiKas::create([
             'tanggal' => $req->tanggal,
-            'kode_akun' => $req->kode,
-            'nama_akun' => $req->nama,
+            'akun_id' => $req->akun_id,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);

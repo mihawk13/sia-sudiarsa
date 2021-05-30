@@ -16,8 +16,7 @@ class CreateTransaksiBiayaTable extends Migration
         Schema::create('transaksi_biaya', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('kode_akun');
-            $table->string('nama_akun');
+            $table->foreignId('akun_id');
             $table->string('ket');
             $table->string('jumlah');
         });

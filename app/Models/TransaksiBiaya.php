@@ -12,5 +12,10 @@ class TransaksiBiaya extends Model
     protected $table = 'transaksi_biaya';
     public $timestamps = false;
 
-    protected $fillable = ['tanggal', 'kode_akun', 'nama_akun', 'ket', 'jumlah'];
+    protected $fillable = ['tanggal', 'akun_id', 'ket', 'jumlah'];
+
+    public function akun()
+    {
+        return $this->hasOne(Akun::class, 'id', 'akun_id');
+    }
 }

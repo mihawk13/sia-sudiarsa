@@ -96,7 +96,6 @@ class BarangController extends Controller
         Barang::where('id', $req->id)->update([
             'nama' => $req->nama,
             'merk' => $req->merk,
-            'harga' => $req->harga,
         ]);
 
         $back = "barang";

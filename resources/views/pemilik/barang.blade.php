@@ -84,7 +84,7 @@
                                 <td>{{ $brg->kode }}</td>
                                 <td>{{ $brg->nama }}</td>
                                 <td>{{ $brg->merk }}</td>
-                                <td>{{ number_format($brg->stock) }}</td>
+                                <td>{{ getStock($brg->id) }}</td>
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-warning btn-icon-anim btn-square btn-sm"

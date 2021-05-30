@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akun;
 use App\Models\TransaksiBiaya;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class BiayaController extends Controller
     public function index()
     {
         $biaya = TransaksiBiaya::all();
-        return view('pemilik.biaya', compact('biaya'));
+        $akun = Akun::all();
+        return view('pemilik.biaya', compact('biaya', 'akun'));
     }
 
     /**
@@ -39,8 +41,7 @@ class BiayaController extends Controller
     {
         TransaksiBiaya::create([
             'tanggal' => $req->tanggal,
-            'kode_akun' => $req->kode,
-            'nama_akun' => $req->nama,
+            'akun_id' => $req->akun_id,
             'ket' => $req->ket,
             'jumlah' => $req->jumlah,
         ]);
