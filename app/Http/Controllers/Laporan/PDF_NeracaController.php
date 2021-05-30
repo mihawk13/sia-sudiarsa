@@ -39,16 +39,19 @@ class PDF_NeracaController extends Controller
             SELECT tanggal, '12' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_penjualan
 
             UNION ALL
+
             SELECT tanggal, '1' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_pembelian
             UNION ALL
             SELECT tanggal, '13' AS 'akun_id', SUM(grand_total) AS debit, 0 kredit FROM transaksi_pembelian
 
             UNION ALL
+
             SELECT tanggal, '1' AS 'akun_id', SUM(jumlah) AS debit, 0 kredit FROM transaksi_kas
             UNION ALL
             SELECT tanggal, akun_id, 0 AS debit, SUM(jumlah) kredit FROM transaksi_kas
 
             UNION ALL
+
             SELECT tanggal, '1' AS 'akun_id', 0 AS debit, SUM(jumlah) kredit FROM transaksi_biaya
             UNION ALL
             SELECT tanggal, akun_id, SUM(jumlah) AS debit, 0 kredit FROM transaksi_biaya
