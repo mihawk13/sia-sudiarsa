@@ -37,6 +37,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/grafik/{tahun}', [DashboardController::class, 'grafik'])->middleware(['auth'])->name('grafik');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::post('/dashboard', [DashboardController::class, 'filter'])->middleware(['auth']);
 

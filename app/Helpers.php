@@ -8,8 +8,6 @@ use App\Models\TransaksiPembelianDetail;
 use App\Models\TransaksiPenjualan;
 use App\Models\TransaksiPenjualanDetail;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast\Double;
-use Prophecy\Exception\Doubler\DoubleException;
 
 function getMerkHelm()
 {
@@ -101,3 +99,5 @@ function getKeluar($dari, $hingga, $brg_id)
     GROUP BY c.id", [$dari, $hingga, $brg_id]);
     return $keluar[0]->jml ?? 0;
 }
+
+
