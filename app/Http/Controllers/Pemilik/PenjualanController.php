@@ -23,7 +23,7 @@ class PenjualanController extends Controller
 
     public function index()
     {
-        $penjualan = TransaksiPenjualan::all();
+        $penjualan = TransaksiPenjualan::where('status', 'Simpan')->get();
         return view('pemilik.penjualan.index', compact('penjualan'));
     }
 

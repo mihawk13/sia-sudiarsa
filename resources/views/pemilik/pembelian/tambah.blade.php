@@ -42,6 +42,15 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="akun" class="control-label">Akun Kas:</label>
+                                <select name="akun" class="form-control" required>
+                                    <option selected value="">--Pilih Akun Kas--</option>
+                                    @foreach ($akun as $akn)
+                                    <option value="{{ $akn->id }}">{{ $akn->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">

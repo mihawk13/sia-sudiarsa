@@ -24,13 +24,13 @@ function getJmlBiaya()
 
 function getTotalPenjualan()
 {
-    $grd = TransaksiPenjualan::sum('grand_total');
+    $grd = TransaksiPenjualan::where('status', 'Simpan')->sum('grand_total');
     return $grd;
 }
 
 function getTotalPembelian()
 {
-    $grd = TransaksiPembelian::sum('grand_total');
+    $grd = TransaksiPembelian::where('status', 'Simpan')->sum('grand_total');
     return $grd;
 }
 

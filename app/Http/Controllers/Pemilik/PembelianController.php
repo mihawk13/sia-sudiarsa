@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akun;
 use App\Models\Kontak;
 use App\Models\TransaksiPembelian;
 use App\Models\TransaksiPembelianDetail;
@@ -22,7 +23,7 @@ class PembelianController extends Controller
 
     public function index()
     {
-        $pembelian = TransaksiPembelian::all();
+        $pembelian = TransaksiPembelian::where('status', 'Simpan')->get();
         return view('pemilik.pembelian.index', compact('pembelian'));
     }
 
@@ -36,9 +37,10 @@ class PembelianController extends Controller
 
         $id = $this->getId();
         $kontak = Kontak::where('status', 'Supplier')->get();
+        $akun = Akun::where('kode', 'LIKE', '1-1%')->get();
         $transaksi = TransaksiPembelianDetail::where('pembelian_id', $this->getId())->get();
 
-        return view('pemilik.pembelian.tambah', compact('kontak', 'id', 'transaksi'));
+        return view('pemilik.pembelian.tambah', compact('kontak', 'id', 'transaksi', 'akun'));
     }
 
     /**
@@ -64,7 +66,6 @@ class PembelianController extends Controller
         TransaksiPembelianDetail::create([
             'pembelian_id' => $req->id_pembelian,
             'barang_id' => $req->barang,
-            'satuan' => $req->satuan,
             'jumlah' => $req->jumlah,
             'harga' => $req->harga,
             'total' => $req->total,
@@ -84,6 +85,7 @@ class PembelianController extends Controller
         TransaksiPembelian::where('id', $req->id)->update([
             'tanggal' => $req->tanggal,
             'kontak_id' => $req->kontak,
+            'akun_id' => $req->akun,
             'grand_total' => $req->total,
             'status' => 'Simpan',
         ]);

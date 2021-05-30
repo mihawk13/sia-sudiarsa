@@ -31,15 +31,10 @@ class Pembelian extends Component
         return view('livewire.pembelian', compact('barangs'));
     }
 
-    public function UpdatedBarang($brg_id)
+    public function UpdatedHarga($harga)
     {
-        try {
-            $barang = Barang::find($brg_id);
-            $this->harga = $barang->harga;
-            $this->total = $barang->harga * $this->jumlah;
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        $this->harga = $harga;
+        $this->total = $harga * $this->jumlah;
     }
 
     public function UpdatedJumlah($jml)
