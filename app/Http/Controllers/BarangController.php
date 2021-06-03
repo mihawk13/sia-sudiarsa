@@ -48,12 +48,14 @@ class BarangController extends Controller
                 'kode' => 'required|unique:barang',
                 'nama' => 'required',
                 'merk' => 'required',
+                'harg_pokok' => 'required',
             ]);
 
             Barang::create([
                 'kode' => $req->kode,
                 'nama' => $req->nama,
                 'merk' => $req->merk,
+                'harga_pokok' => $req->harga,
             ]);
 
             return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
@@ -96,6 +98,7 @@ class BarangController extends Controller
         Barang::where('id', $req->id)->update([
             'nama' => $req->nama,
             'merk' => $req->merk,
+            'harga_pokok' => $req->harga,
         ]);
 
         $back = "barang";

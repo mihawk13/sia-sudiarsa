@@ -14,7 +14,7 @@
             <input type="number" class="form-control" name="jumlah" wire:model="jumlah">
         </td>
         <td width="15%">
-            <input type="number" class="form-control" name="harga" wire:model="harga">
+            <input type="number" class="form-control" name="harga" readonly wire:model="harga">
         </td>
         <td width="25%">
             <input type="number" class="form-control" name="total" readonly wire:model="total">
@@ -27,3 +27,16 @@
         </td>
     </form>
 </tr>
+
+@push('scripts')
+
+<script>
+    $(document).ready(function () {
+        $('#barang').on('change', function (e) {
+            var barang = $('#barang').val();
+            @this.set('barang', barang);
+        });
+    });
+</script>
+
+@endpush

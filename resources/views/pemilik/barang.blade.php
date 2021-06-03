@@ -53,6 +53,11 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="harga" class="control-label">Harga Pokok:</label>
+                                        <input type="number" class="form-control" name="harga" required
+                                            placeholder="Masukkan Harga Pokok Barang">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger waves-effect"
@@ -73,6 +78,7 @@
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Merk</th>
+                                <th>Harga Pokok</th>
                                 <th>Stock</th>
                                 <th>Aksi</th>
                             </tr>
@@ -84,6 +90,7 @@
                                 <td>{{ $brg->kode }}</td>
                                 <td>{{ $brg->nama }}</td>
                                 <td>{{ $brg->merk }}</td>
+                                <td>{{ number_format($brg->harga_pokok) }}</td>
                                 <td>{{ getStock($brg->id) }}</td>
                                 <td>
                                     <center>
@@ -124,6 +131,11 @@
                                                         <option @if($brg->merk == $itm) selected @endif value="{{ $itm }}">{{ $itm }}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="harga" class="control-label">Harga Pokok:</label>
+                                                    <input type="number" class="form-control" name="harga" required
+                                                        placeholder="Masukkan Harga Pokok Barang" value="{{ $brg->harga_pokok }}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

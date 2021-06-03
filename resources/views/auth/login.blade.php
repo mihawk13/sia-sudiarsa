@@ -19,7 +19,11 @@ Author URL: http://w3layouts.com
 
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="{{ asset('logins/css/style.css') }}" type="text/css" media="all" />
-
+    <style>
+        .text-danger {
+            color: #ef5350 !important;
+        }
+    </style>
 </head>
 
 <body>

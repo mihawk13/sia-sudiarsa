@@ -30,9 +30,15 @@ class PDF_CALKController extends Controller
 
         $totPendapatan = 0;
         $totBeban = 0;
+        $totLaba = 0;
+        $totPembelian = 0;
 
-        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.kredit) jumlah FROM (
-            SELECT tanggal, '12' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_penjualan) AS a
+        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
+            SELECT tanggal, '11' AS 'akun_id', SUM(grand_total) jumlah FROM transaksi_penjualan GROUP BY tanggal) AS a
+            INNER JOIN akun AS b ON a.akun_id=b.id
+            WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
+        $pembelian = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
+            SELECT tanggal, '12' AS 'akun_id', SUM(grand_total) jumlah FROM transaksi_pembelian GROUP BY tanggal) AS a
             INNER JOIN akun AS b ON a.akun_id=b.id
             WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
         $beban = DB::select("SELECT tanggal, akun_id, b.nama, SUM(jumlah) AS jumlah FROM transaksi_biaya AS a
@@ -42,14 +48,18 @@ class PDF_CALKController extends Controller
 
 
         foreach ($pemasukan as $pms) {
-            $totPendapatan += $pms->jumlah;
+            $totLaba += $pms->jumlah;
+        }
+
+        foreach ($pembelian as $pmb) {
+            $totPembelian += $pmb->jumlah;
         }
 
         foreach ($beban as $bbn) {
             $totBeban += $bbn->jumlah;
         }
 
-        $totLabRug = $totPendapatan - $totBeban;
+        $totPendapatan = $totLaba - ($totBeban + $totPembelian);
 
         $this->pdf->ln(1);
         $this->pdf->SetFont('Arial', 'B', 10);
@@ -68,14 +78,17 @@ class PDF_CALKController extends Controller
         $this->pdf->Cell(110, 7, "c. Informasi Laporan Keuangan", 0, 1, 'L');
         $this->pdf->SetFont('Arial', '', 10);
 
-        // if ($totLabRug < 0) {
-        //     $this->pdf->SetTextColor(255, 0, 0);
-        // } else {
-        //     $this->pdf->SetTextColor(0, 255, 0);
-        // }
-
+        $this->pdf->Cell(105, 7, "Total Pembelian", 0, 0, 'L');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totPembelian), 0, 0, 'R');
+        $this->pdf->ln(7);
+        $this->pdf->Cell(105, 7, "Total Beban", 0, 0, 'L');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totBeban), 0, 0, 'R');
+        $this->pdf->ln(7);
         $this->pdf->Cell(105, 7, "Laba Bersih Bulan Ini", 0, 0, 'L');
-        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totLabRug), 0, 0, 'R');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totLaba), 0, 0, 'R');
+        $this->pdf->ln(7);
+        $this->pdf->Cell(105, 7, "Total Pendapatan", 0, 0, 'L');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totPendapatan), 0, 0, 'R');
         $this->pdf->ln(7);
 
         // $this->pdf->SetTextColor(0, 0, 0);

@@ -18,6 +18,7 @@ class CreateBarangTable extends Migration
             $table->string('kode');
             $table->string('nama');
             $table->string('merk');
+            $table->double('harga_pokok')->default(0);
         });
     }
 

@@ -48,11 +48,19 @@
                 @php
                 $totPendapatan = 0;
                 $totBeban = 0;
-                $totLabaRugi = 0;
+                $totLaba = 0;
+                $totPembelian = 0;
                 @endphp
+
                 @foreach ($pemasukan as $pms)
                 @php
-                $totPendapatan += $pms->jumlah;
+                $totLaba += $pms->jumlah;
+                @endphp
+                @endforeach
+
+                @foreach ($pembelian as $pmb)
+                @php
+                $totPembelian += $pmb->jumlah;
                 @endphp
                 @endforeach
 
@@ -61,8 +69,9 @@
                 $totBeban += $bbn->jumlah;
                 @endphp
                 @endforeach
+
                 @php
-                $totLabaRugi = $totPendapatan - $totBeban;
+                $totPendapatan = $totLaba - ($totBeban + $totPembelian);
                 @endphp
 
                 <div class="table-responsive m-t-40">
@@ -75,8 +84,22 @@
                             aturan Standar Akuntasnsi Keuangan - Entitas Mikro Kecil dan Menengah (SAK-EMKM)</p>
                         <h5>c. Informasi Laporan Keuangan</h5>
                         <tbody>
-                            <td>Laba Bersih Bulan Ini</td>
-                            <td>Rp. {{ number_format($totLabaRugi) }}</td>
+                            <tr>
+                                <td>Total Pembelian</td>
+                                <td>Rp. {{ number_format($totPembelian) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Beban</td>
+                                <td>Rp. {{ number_format($totBeban) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Laba Bersih Bulan Ini</td>
+                                <td>Rp. {{ number_format($totLaba) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Pendapatan</td>
+                                <td>Rp. {{ number_format($totPendapatan) }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

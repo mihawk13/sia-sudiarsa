@@ -43,7 +43,9 @@ max-width: 30%;">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <a href="@if(auth()->user()->level == 'Karyawan') {{ route('karyawan.pembelian.tambah')  }} @else {{ route('pembelian.tambah')  }} @endif" class="btn btn-info waves-effect waves-light text-white" type="button"><span class="btn-label"><i class="fa fa-plus"></i></span>Tambah</a>
+                <a href="@if(auth()->user()->level == 'Karyawan') {{ route('karyawan.pembelian.tambah')  }} @else {{ route('pembelian.tambah')  }} @endif"
+                    class="btn btn-info waves-effect waves-light text-white" type="button"><span class="btn-label"><i
+                            class="fa fa-plus"></i></span>Tambah</a>
 
                 <div class="table-responsive m-t-40">
                     <table id="myTable" class="table table-bordered table-striped">
@@ -53,7 +55,9 @@ max-width: 30%;">
                                 <th>Tanggal</th>
                                 <th>Nama Supplier</th>
                                 <th>Total</th>
+                                @if (auth()->user()->level == 'Pemilik')
                                 <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +67,7 @@ max-width: 30%;">
                                 <td>{{ $pmb->tanggal }}</td>
                                 <td>{{ $pmb->kontak->nama }}</td>
                                 <td>{{ number_format($pmb->grand_total) }}</td>
+                                @if (auth()->user()->level == 'Pemilik')
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-danger btn-icon-anim btn-square btn-sm"
@@ -70,6 +75,7 @@ max-width: 30%;">
                                             data-target="#hapus{{ $pmb->id }}"><i class="fa fa-trash"></i></button>
                                     </center>
                                 </td>
+                                @endif
                             </tr>
                             <div id="hapus{{ $pmb->id }}" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

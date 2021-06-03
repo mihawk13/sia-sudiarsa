@@ -31,14 +31,23 @@ class Pembelian extends Component
         return view('livewire.pembelian', compact('barangs'));
     }
 
-    public function UpdatedHarga($harga)
+    public function UpdatedBarang($brg_id)
     {
-        $this->harga = $harga;
-        $this->total = $harga * $this->jumlah;
+        try {
+            $barang = Barang::find($brg_id);
+            $this->harga = $barang->harga_pokok;
+            $this->total = $barang->harga_pokok * $this->jumlah;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     public function UpdatedJumlah($jml)
     {
-        $this->total = $this->harga * $jml;
+        try {
+            $this->total = $this->harga * $jml;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

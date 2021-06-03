@@ -34,13 +34,21 @@ class Penjualan extends Component
 
     public function UpdatedHarga($harga)
     {
-        $this->harga = $harga;
-        $this->total = $harga * $this->jumlah;
+        try {
+            $this->harga = $harga;
+            $this->total = $harga * $this->jumlah;
+        } catch (\Throwable $th) {
+            // $this->harga = 0;
+        }
     }
 
     public function UpdatedJumlah($jml)
     {
-        $this->jumlah = $jml;
-        $this->total = $this->harga * $jml;
+        try {
+            $this->jumlah = $jml;
+            $this->total = $this->harga * $jml;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

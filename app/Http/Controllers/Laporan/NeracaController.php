@@ -22,12 +22,12 @@ class NeracaController extends Controller
         $laporan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.debit) debit, SUM(a.kredit) kredit FROM (
             SELECT tanggal, '1' AS 'akun_id', SUM(grand_total) AS debit, 0 kredit FROM transaksi_penjualan
             UNION ALL
-            SELECT tanggal, '12' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_penjualan
+            SELECT tanggal, '11' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_penjualan
 
             UNION ALL
             SELECT tanggal, '1' AS 'akun_id', 0 AS debit, SUM(grand_total) kredit FROM transaksi_pembelian
             UNION ALL
-            SELECT tanggal, '13' AS 'akun_id', SUM(grand_total) AS debit, 0 kredit FROM transaksi_pembelian
+            SELECT tanggal, '12' AS 'akun_id', SUM(grand_total) AS debit, 0 kredit FROM transaksi_pembelian
 
             UNION ALL
             SELECT tanggal, '1' AS 'akun_id', SUM(jumlah) AS debit, 0 kredit FROM transaksi_kas

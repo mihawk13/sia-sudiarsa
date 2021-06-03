@@ -53,7 +53,9 @@ max-width: 30%;">
                                 <th>Tanggal</th>
                                 <th>Nama Customer</th>
                                 <th>Total</th>
+                                @if (auth()->user()->level == 'Pemilik')
                                 <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +65,7 @@ max-width: 30%;">
                                 <td>{{ $pnj->tanggal }}</td>
                                 <td>{{ $pnj->kontak->nama }}</td>
                                 <td>{{ number_format($pnj->grand_total) }}</td>
+                                @if (auth()->user()->level == 'Pemilik')
                                 <td>
                                     <center>
                                         <button type="button" class="btn btn-danger btn-icon-anim btn-square btn-sm"
@@ -70,6 +73,7 @@ max-width: 30%;">
                                             data-target="#hapus{{ $pnj->id }}"><i class="fa fa-trash"></i></button>
                                     </center>
                                 </td>
+                                @endif
                             </tr>
                             <div id="hapus{{ $pnj->id }}" class="modal fade" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
