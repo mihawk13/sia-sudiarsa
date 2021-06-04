@@ -48,7 +48,7 @@ class BarangController extends Controller
                 'kode' => 'required|unique:barang',
                 'nama' => 'required',
                 'merk' => 'required',
-                'harg_pokok' => 'required',
+                'harga' => 'required',
             ]);
 
             Barang::create([
