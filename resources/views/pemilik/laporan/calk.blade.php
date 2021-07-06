@@ -46,15 +46,15 @@
                 @if ($dari)
 
                 @php
-                $totPendapatan = 0;
+                $totPenjualan = 0;
                 $totBeban = 0;
-                $totLaba = 0;
+                $totPendapatan = 0;
                 $totPembelian = 0;
                 @endphp
 
                 @foreach ($pemasukan as $pms)
                 @php
-                $totLaba += $pms->jumlah;
+                $totPenjualan += $pms->jumlah;
                 @endphp
                 @endforeach
 
@@ -70,9 +70,9 @@
                 @endphp
                 @endforeach
 
-                @php
-                $totPendapatan = $totLaba - ($totBeban + $totPembelian);
-                @endphp
+                {{-- @php
+                $totPendapatan = $totPenjualan - ($totBeban + $totPembelian);
+                @endphp --}}
 
                 <div class="table-responsive m-t-40">
                     <table class="table">
@@ -89,16 +89,16 @@
                                 <td>Rp. {{ number_format($totPembelian) }}</td>
                             </tr>
                             <tr>
-                                <td>Total Beban</td>
-                                <td>Rp. {{ number_format($totBeban) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Laba Bersih Bulan Ini</td>
-                                <td>Rp. {{ number_format($totLaba) }}</td>
+                                <td>Total Penjualan</td>
+                                <td>Rp. {{ number_format($totPenjualan) }}</td>
                             </tr>
                             <tr>
                                 <td>Total Pendapatan</td>
-                                <td>Rp. {{ number_format($totPendapatan) }}</td>
+                                <td>Rp. {{ number_format($totPenjualan) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Beban</td>
+                                <td>Rp. {{ number_format($totBeban) }}</td>
                             </tr>
                         </tbody>
                     </table>

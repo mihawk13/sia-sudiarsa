@@ -19,8 +19,12 @@ class CALKController extends Controller // Catatan Atas Laporan Keuangan
     {
         $dari = $req->dari;
         $hingga = $req->hingga;
-        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
-            SELECT tanggal, '11' AS 'akun_id', SUM(grand_total) jumlah FROM transaksi_penjualan GROUP BY tanggal) AS a
+        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.kredit) jumlah FROM (
+            SELECT tanggal, '11' AS 'akun_id', 0 AS debit, SUM(b.total-(c.harga_pokok*b.jumlah)) kredit,c.nama FROM transaksi_penjualan a
+            INNER JOIN transaksi_penjualan_detail b ON a.id=b.penjualan_id
+            INNER JOIN barang c ON b.barang_id=c.id
+            GROUP BY b.barang_id
+            ) AS a
             INNER JOIN akun AS b ON a.akun_id=b.id
             WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
         $pembelian = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
