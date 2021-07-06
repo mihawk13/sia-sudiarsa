@@ -1,6 +1,7 @@
 <?
 
 use App\Models\Akun;
+use App\Models\PerpindahanDana;
 use App\Models\TransaksiBiaya;
 use App\Models\TransaksiKas;
 use App\Models\TransaksiPembelian;
@@ -46,7 +47,7 @@ function getSaldoAkun($akun_id)
         $masukJual = TransaksiPenjualan::where('status', 'Simpan')->sum('grand_total');
         $keluarBeli = TransaksiPembelian::where('status', 'Simpan')->sum('grand_total');
         $masukKas = TransaksiKas::sum('jumlah');
-        $keluarBiaya = TransaksiBiaya::sum('jumlah');
+        $keluarBiaya = TransaksiBiaya::sum('jumlah') + PerpindahanDana::where('dari', '1')->sum('jumlah');
         $masuk = $masukJual + $masukKas;
         $keluar = $keluarBeli + $keluarBiaya;
     } elseif ($akun->kode == '4-1001') { // akun penjualan
@@ -60,7 +61,7 @@ function getSaldoAkun($akun_id)
     } else {
         $masukJual = TransaksiPenjualan::where('status', 'Simpan')->where('akun_id', $akun_id)->sum('grand_total');
         $keluarBeli = TransaksiPembelian::where('status', 'Simpan')->where('akun_id', $akun_id)->sum('grand_total');
-        $masukKas = TransaksiKas::where('akun_id', $akun_id)->sum('jumlah');
+        $masukKas = TransaksiKas::where('akun_id', $akun_id)->sum('jumlah') + PerpindahanDana::where('dari', $akun_id)->sum('jumlah') - PerpindahanDana::where('ke', $akun_id)->sum('jumlah');
         $keluarBiaya = TransaksiBiaya::where('akun_id', $akun_id)->sum('jumlah');
         $masuk = $masukJual + $masukKas;
         $keluar = $keluarBeli + $keluarBiaya;

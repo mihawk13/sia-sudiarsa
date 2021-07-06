@@ -60,6 +60,8 @@ Route::middleware(['pemilik', 'auth'])->prefix('pemilik')->group(function () {
     Route::get('kas', [KasController::class, 'index'])->name('kas');
     Route::post('kas', [KasController::class, 'store']);
     Route::put('kas', [KasController::class, 'update']);
+    Route::patch('kas', [KasController::class, 'perpindahan_dana'])->name('transfer');
+    Route::delete('kas', [KasController::class, 'perpindahan_dana_hapus'])->name('transfer.hapus');
 
     Route::get('biaya', [BiayaController::class, 'index'])->name('biaya');
     Route::post('biaya', [BiayaController::class, 'store']);

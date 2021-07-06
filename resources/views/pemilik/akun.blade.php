@@ -60,7 +60,6 @@
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Saldo</th>
@@ -70,7 +69,6 @@
                         <tbody>
                             @foreach ($akun as $akn)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $akn->kode }}</td>
                                 <td>{{ $akn->nama }}</td>
                                 <td>{{ number_format(getSaldoAkun($akn->id)) }}</td>
