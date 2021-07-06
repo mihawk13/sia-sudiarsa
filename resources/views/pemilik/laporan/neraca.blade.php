@@ -62,6 +62,7 @@
                             @endphp
 
                             @foreach ($laporan as $lap)
+                            @if($lap->debit>0 || $lap->kredit>0)
                             @php
                             $totDebit += $lap->debit;
                             $totKredit += $lap->kredit;
@@ -72,6 +73,7 @@
                                 <td>{{ number_format($lap->debit) }}</td>
                                 <td>{{ number_format($lap->kredit) }}</td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                         <tfoot>
