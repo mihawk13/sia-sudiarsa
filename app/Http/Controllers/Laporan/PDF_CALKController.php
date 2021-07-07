@@ -30,11 +30,23 @@ class PDF_CALKController extends Controller
 
         $totPendapatan = 0;
         $totBeban = 0;
-        $totLaba = 0;
+        $totPenjualan = 0;
         $totPembelian = 0;
 
-        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
-            SELECT tanggal, '11' AS 'akun_id', SUM(grand_total) jumlah FROM transaksi_penjualan GROUP BY tanggal) AS a
+        $pemasukan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.kredit) jumlah FROM (
+            SELECT tanggal, '11' AS 'akun_id', 0 AS debit, SUM(b.total-(c.harga_pokok*b.jumlah)) kredit,c.nama FROM transaksi_penjualan a
+            INNER JOIN transaksi_penjualan_detail b ON a.id=b.penjualan_id
+            INNER JOIN barang c ON b.barang_id=c.id
+            GROUP BY b.barang_id
+            ) AS a
+            INNER JOIN akun AS b ON a.akun_id=b.id
+            WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
+        $pendapatan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.kredit) jumlah FROM (
+            SELECT tanggal, '11' AS 'akun_id', 0 AS debit, SUM(b.total) kredit,c.nama FROM transaksi_penjualan a
+            INNER JOIN transaksi_penjualan_detail b ON a.id=b.penjualan_id
+            INNER JOIN barang c ON b.barang_id=c.id
+            GROUP BY b.barang_id
+            ) AS a
             INNER JOIN akun AS b ON a.akun_id=b.id
             WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
         $pembelian = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
@@ -48,7 +60,7 @@ class PDF_CALKController extends Controller
 
 
         foreach ($pemasukan as $pms) {
-            $totLaba += $pms->jumlah;
+            $totPenjualan += $pms->jumlah;
         }
 
         foreach ($pembelian as $pmb) {
@@ -59,7 +71,10 @@ class PDF_CALKController extends Controller
             $totBeban += $bbn->jumlah;
         }
 
-        $totPendapatan = $totLaba - ($totBeban + $totPembelian);
+        foreach ($pendapatan as $pnd) {
+            $totPendapatan += $pnd->jumlah;
+        }
+
 
         $this->pdf->ln(1);
         $this->pdf->SetFont('Arial', 'B', 10);
@@ -81,14 +96,14 @@ class PDF_CALKController extends Controller
         $this->pdf->Cell(105, 7, "Total Pembelian", 0, 0, 'L');
         $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totPembelian), 0, 0, 'R');
         $this->pdf->ln(7);
-        $this->pdf->Cell(105, 7, "Total Beban", 0, 0, 'L');
-        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totBeban), 0, 0, 'R');
-        $this->pdf->ln(7);
-        $this->pdf->Cell(105, 7, "Laba Bersih Bulan Ini", 0, 0, 'L');
-        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totLaba), 0, 0, 'R');
+        $this->pdf->Cell(105, 7, "Total Penjualan", 0, 0, 'L');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totPenjualan), 0, 0, 'R');
         $this->pdf->ln(7);
         $this->pdf->Cell(105, 7, "Total Pendapatan", 0, 0, 'L');
         $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totPendapatan), 0, 0, 'R');
+        $this->pdf->ln(7);
+        $this->pdf->Cell(105, 7, "Total Beban", 0, 0, 'L');
+        $this->pdf->Cell(30, 7, 'Rp. ' . number_format($totBeban), 0, 0, 'R');
         $this->pdf->ln(7);
 
         // $this->pdf->SetTextColor(0, 0, 0);
