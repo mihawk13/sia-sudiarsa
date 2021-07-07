@@ -27,6 +27,14 @@ class CALKController extends Controller // Catatan Atas Laporan Keuangan
             ) AS a
             INNER JOIN akun AS b ON a.akun_id=b.id
             WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
+        $pendapatan = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.kredit) jumlah FROM (
+            SELECT tanggal, '11' AS 'akun_id', 0 AS debit, SUM(b.total) kredit,c.nama FROM transaksi_penjualan a
+            INNER JOIN transaksi_penjualan_detail b ON a.id=b.penjualan_id
+            INNER JOIN barang c ON b.barang_id=c.id
+            GROUP BY b.barang_id
+            ) AS a
+            INNER JOIN akun AS b ON a.akun_id=b.id
+            WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
         $pembelian = DB::select("SELECT tanggal, b.kode, b.nama, SUM(a.jumlah) jumlah FROM (
             SELECT tanggal, '12' AS 'akun_id', SUM(grand_total) jumlah FROM transaksi_pembelian GROUP BY tanggal) AS a
             INNER JOIN akun AS b ON a.akun_id=b.id
@@ -34,6 +42,6 @@ class CALKController extends Controller // Catatan Atas Laporan Keuangan
         $beban = DB::select("SELECT tanggal, akun_id, b.nama, SUM(jumlah) AS jumlah FROM transaksi_biaya AS a
                                 INNER JOIN akun AS b ON a.akun_id=b.id
                                 WHERE a.tanggal BETWEEN ? AND ? GROUP BY a.akun_id", [$dari, $hingga]);
-        return view('pemilik.laporan.calk', compact('dari', 'hingga', 'pemasukan', 'pembelian', 'beban'));
+        return view('pemilik.laporan.calk', compact('dari', 'hingga', 'pemasukan', 'pembelian', 'beban', 'pendapatan'));
     }
 }

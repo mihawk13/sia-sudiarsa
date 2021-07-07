@@ -70,9 +70,11 @@
                 @endphp
                 @endforeach
 
-                {{-- @php
-                $totPendapatan = $totPenjualan - ($totBeban + $totPembelian);
-                @endphp --}}
+                @foreach ($pendapatan as $pnd)
+                @php
+                $totPendapatan += $pnd->jumlah;
+                @endphp
+                @endforeach
 
                 <div class="table-responsive m-t-40">
                     <table class="table">
@@ -94,7 +96,7 @@
                             </tr>
                             <tr>
                                 <td>Total Pendapatan</td>
-                                <td>Rp. {{ number_format($totPenjualan) }}</td>
+                                <td>Rp. {{ number_format($totPendapatan) }}</td>
                             </tr>
                             <tr>
                                 <td>Total Beban</td>
