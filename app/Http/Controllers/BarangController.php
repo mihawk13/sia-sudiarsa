@@ -44,23 +44,34 @@ class BarangController extends Controller
         }
 
         try {
-            $req->validate([
-                'kode' => 'required|unique:barang',
-                'nama' => 'required',
-                'merk' => 'required',
-                'harga' => 'required',
-            ]);
-
-            Barang::create([
-                'kode' => $req->kode,
-                'nama' => $req->nama,
-                'merk' => $req->merk,
-                'harga_pokok' => $req->harga,
-            ]);
-
-            return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+            Barang::where('nama', $req->nama)->firstOrFail();
+            return redirect()->route($back)->with('gagal', 'Nama sudah digunakan!');
         } catch (\Throwable $th) {
-            return redirect()->route($back)->with('gagal', $th->getMessage());
+            try {
+                Barang::where('kode', $req->kode)->firstOrFail();
+                return redirect()->route($back)->with('gagal', 'Kode sudah digunakan!');
+            } catch (\Throwable $th) {
+                try {
+
+                    $req->validate([
+                        'kode' => 'required|unique:barang',
+                        'nama' => 'required',
+                        'merk' => 'required',
+                        'harga' => 'required',
+                    ]);
+
+                    Barang::create([
+                        'kode' => $req->kode,
+                        'nama' => $req->nama,
+                        'merk' => $req->merk,
+                        'harga_pokok' => $req->harga,
+                    ]);
+
+                    return redirect()->route($back)->with('berhasil', 'Data berhasil ditambah!');
+                } catch (\Throwable $th) {
+                    return redirect()->route($back)->with('gagal', $th->getMessage());
+                }
+            }
         }
     }
 
