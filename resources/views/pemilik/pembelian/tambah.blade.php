@@ -15,6 +15,15 @@
 </div>
 @endsection
 
+@php
+$total = 0;
+@endphp
+@foreach ($transaksi as $trx)
+@php
+$total += $trx->total;
+@endphp
+@endforeach
+
 @section('content')
 <x-messages />
 
@@ -45,23 +54,15 @@
                             <div class="form-group">
                                 <label for="akun" class="control-label">Akun Kas:</label>
                                 <select name="akun" class="form-control" required>
-                                    <option selected value="">--Pilih Akun Kas--</option>
+                                    <option selected disabled value="">--Pilih Akun Kas--</option>
                                     @foreach ($akun as $akn)
-                                    <option value="{{ $akn->id }}">{{ $akn->kode . ' - ' . $akn->nama }}</option>
+                                    <option @if($total>getSaldoAkun($akn->id)) disabled @endif value="{{ $akn->id }}">{{ $akn->kode . ' - ' . $akn->nama  . ' | ' . number_format(getSaldoAkun($akn->id)) }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
-                                @php
-                                $total = 0;
-                                @endphp
-                                @foreach ($transaksi as $trx)
-                                @php
-                                $total += $trx->total;
-                                @endphp
-                                @endforeach
                                 <label for="total" class="control-label">Total Pembelian:</label>
                                 <input type="number" class="form-control" name="total" readonly value="{{ $total }}">
                             </div>

@@ -35,10 +35,20 @@ class Pembelian extends Component
     {
         try {
             $barang = Barang::find($brg_id);
-            $this->harga = $barang->harga_pokok;
-            $this->total = $barang->harga_pokok * $this->jumlah;
+            $this->harga = 0;
+            $this->total = 0;
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+
+    public function UpdatedHarga($harga)
+    {
+        try {
+            $this->harga = $harga;
+            $this->total = $harga * $this->jumlah;
+        } catch (\Throwable $th) {
+            // $this->harga = 0;
         }
     }
 
